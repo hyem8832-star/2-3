@@ -3,79 +3,116 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>자연 놀이 추천 앱</title>
+  <title>자연 놀이 추천 서비스</title>
   <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
-  <header class="header">
-    <div class="container nav">
-      <h1 class="logo">Nature Play</h1>
-      <nav class="menu">
-        <a href="#home">홈</a>
-        <a href="#service">서비스 소개</a>
-        <a href="#recommend">AI 추천</a>
-      </nav>
-    </div>
+  <header>
+    <nav class="navbar">
+      <h1 class="logo">자연 놀이 추천</h1>
+      <ul class="nav-links">
+        <li><a href="#home">홈</a></li>
+        <li><a href="#about">서비스 소개</a></li>
+        <li><a href="#recommend">AI 추천</a></li>
+        <li><a href="#faq">FAQ</a></li>
+      </ul>
+    </nav>
   </header>
 
   <main>
+    <!-- 1. 홈 섹션 -->
     <section id="home" class="hero">
-      <div class="container">
-        <h2>아이와 함께하는 자연 놀이를 더 쉽게</h2>
+      <div class="hero-content">
+        <h2>아이와 함께하는 자연 놀이, AI가 추천해드려요</h2>
         <p>
-          장소, 나이, 원하는 분위기를 입력하면
-          AI가 우리 가족에게 맞는 자연 놀이를 추천해드립니다.
+          장소, 아이 나이, 원하는 분위기를 입력하면
+          부모와 아이가 함께할 수 있는 자연 놀이를 추천해드립니다.
         </p>
-        <a href="#recommend" class="btn">지금 추천 받기</a>
+        <a href="#recommend" class="btn">지금 추천받기</a>
       </div>
     </section>
 
-    <section id="service" class="section">
-      <div class="container">
-        <h2>서비스 소개</h2>
-        <div class="card-grid">
-          <div class="card">
-            <h3>맞춤 추천</h3>
-            <p>입력한 조건에 맞는 자연 놀이를 AI가 바로 추천합니다.</p>
-          </div>
-          <div class="card">
-            <h3>쉬운 실천</h3>
-            <p>준비물, 진행 방법, 안전 팁까지 한 번에 확인할 수 있습니다.</p>
-          </div>
-          <div class="card">
-            <h3>모바일 대응</h3>
-            <p>휴대폰에서도 편하게 사용할 수 있는 반응형 웹입니다.</p>
-          </div>
+    <!-- 2. 서비스 소개 섹션 -->
+    <section id="about" class="section">
+      <h2>서비스 소개</h2>
+      <p>
+        이 서비스는 부모가 아이와 함께 할 수 있는 자연 놀이 활동을
+        쉽고 빠르게 찾을 수 있도록 도와줍니다.
+      </p>
+      <div class="card-container">
+        <div class="card">
+          <h3>맞춤 추천</h3>
+          <p>장소, 나이, 테마에 맞는 자연 놀이를 추천합니다.</p>
+        </div>
+        <div class="card">
+          <h3>쉬운 진행</h3>
+          <p>준비물과 3단계 진행 방법까지 한 번에 확인할 수 있습니다.</p>
+        </div>
+        <div class="card">
+          <h3>안전 고려</h3>
+          <p>아이와 함께할 때 꼭 필요한 안전 팁도 함께 제공합니다.</p>
         </div>
       </div>
     </section>
 
-    <section id="recommend" class="section recommend-section">
-      <div class="container">
-        <h2>AI 자연 놀이 추천</h2>
-        <div class="form-card">
-          <label for="location">놀이 장소</label>
-          <input id="location" type="text" placeholder="예: 공원, 숲길, 아파트 앞 마당" />
+    <!-- 3. AI 추천 섹션 -->
+    <section id="recommend" class="section">
+      <h2>AI 자연 놀이 추천</h2>
+      <p>아래 정보를 입력하면 AI가 자연 놀이를 추천해드립니다.</p>
 
-          <label for="age">아이 나이</label>
-          <input id="age" type="text" placeholder="예: 5세" />
+      <form id="recommendForm" class="recommend-form">
+        <label for="location">장소</label>
+        <input
+          type="text"
+          id="location"
+          name="location"
+          placeholder="예: 공원, 숲길, 집 앞 마당"
+        />
 
-          <label for="theme">원하는 테마/분위기</label>
-          <input id="theme" type="text" placeholder="예: 조용한 관찰 놀이, 활동적인 놀이" />
+        <label for="age">아이 나이</label>
+        <input
+          type="text"
+          id="age"
+          name="age"
+          placeholder="예: 5살"
+        />
 
-          <button id="recommendBtn" class="btn">추천 받기</button>
+        <label for="theme">원하는 테마 / 분위기</label>
+        <input
+          type="text"
+          id="theme"
+          name="theme"
+          placeholder="예: 창의적, 차분한, 신나게 뛰어노는"
+        />
 
-          <p id="status" class="status"></p>
-          <div id="result" class="result-box"></div>
-        </div>
+        <button type="submit">추천 받기</button>
+      </form>
+
+      <div id="result" class="result-box">
+        여기에 AI 추천 결과가 표시됩니다.
+      </div>
+    </section>
+
+    <!-- 4. FAQ 섹션 -->
+    <section id="faq" class="section">
+      <h2>자주 묻는 질문</h2>
+      <div class="faq-item">
+        <h3>Q. 어떤 정보를 입력해야 하나요?</h3>
+        <p>A. 장소, 아이 나이, 원하는 분위기 또는 테마를 입력하면 됩니다.</p>
+      </div>
+      <div class="faq-item">
+        <h3>Q. 결과는 바로 나오나요?</h3>
+        <p>A. 보통 몇 초 안에 추천 결과가 표시됩니다.</p>
+      </div>
+      <div class="faq-item">
+        <h3>Q. 입력을 비우면 어떻게 되나요?</h3>
+        <p>A. 필수값이 비어 있으면 안내 메시지가 표시됩니다.</p>
       </div>
     </section>
   </main>
 
   <footer class="footer">
-    <div class="container">
-      <p>© 2026 Nature Play App</p>
-    </div>
+    <p>© 2026 자연 놀이 추천 서비스 | 아이와 함께 즐거운 하루를 만들어보세요</p>
   </footer>
 
   <script src="js/main.js"></script>
