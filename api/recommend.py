@@ -1,78 +1,37 @@
-from http.server import BaseHTTPRequestHandler
-import json
-import os
+from flask import Flask, request, jsonify
 from openai import OpenAI
+import os
 
-class handler(BaseHTTPRequestHandler):
+app = Flask(__name__)
 
-    def do_OPTIONS(self):
-        self.send_response(200)
-        self.send_header('Access-Control-Allow-Origin', '*')
-        self.send_header('Access-Control-Allow-Methods', 'POST, OPTIONS')
-        self.send_header('Access-Control-Allow-Headers', 'Content-Type')
-        self.end_headers()
+@app.route('/api/recommend', methods=['POST'])
+def recommend():
+    data = request.get_json()
+    location = data.get('location', '')
+    age = data.get('age', '')
+    theme = data.get('theme', '')
 
-    def do_POST(self):
-        content_length = int(self.headers.get('Content-Length', 0))
-        body = self.rfile.read(content_length)
+    client = OpenAI(
+        api_key=os.environ.get('OPENAI_API_KEY'),
+        base_url=os.environ.get('OPENAI_API_BASE_URL')
+    )
 
-        try:
-            data = json.loads(body)
-        except:
-            self.send_response(400)
-            self.send_header('Content-Type', 'application/json')
-            self.send_header('Access-Control-Allow-Origin', '*')
-            self.end_headers()
-            self.wfile.write(json.dumps({'error': '잘못된 요청입니다.'}).encode())
-            return
+    prompt = f"장소: {location}, 나이: {age}, 테마: {theme}에 맞는 자연 놀이 활동 3가지를 추천해줘. 각각 제목과 설명을 포함해서 한국어로 답해줘."
 
-        age = data.get('age', '').strip()
-        weather = data.get('weather', '').strip()
-        place = data.get('place', '').strip()
+    response = client.chat.completions.create(
+        model="gpt-4o-mini",
+        messages=[{"role": "user", "content": prompt}]
+    )
 
-        if not age or not weather or not place:
-            self.send_response(400)
-            self.send_header('Content-Type', 'application/json')
-            self.send_header('Access-Control-Allow-Origin', '*')
-            self.end_headers()
-            self.wfile.write(json.dumps({'error': '필수값이 누락되었습니다.'}).encode())
-            return
+    result = response.choices[0].message.content
+    return jsonify({"result": result})
 
-        try:
-            api_key = os.environ.get('OPENAI_API_KEY')
-            base_url = os.environ.get('OPENAI_BASE_URL')
-
-            client = OpenAI(api_key=api_key, base_url=base_url)
-
-            prompt = (
-                f"아이 나이: {age}\n"
-                f"날씨: {weather}\n"
-                f"장소: {place}\n\n"
-                "위 조건에 맞는 자연 놀이 활동을 3가지 추천해줘. "
-                "각 활동마다 이름, 방법, 기대 효과를 간단히 설명해줘. "
-                "친근하고 따뜻한 말투로 부모에게 말하듯이 써줘."
-            )
-
-            response = client.chat.completions.create(
-                model="gpt-4o-mini",
-                messages=[
-                    {"role": "system", "content": "당신은 아이 자연 놀이 전문가입니다. 부모에게 친절하게 놀이를 추천해주세요."},
-                    {"role": "user", "content": prompt}
-                ],
-                max_tokens=800
-            )
-
-            result = response.choices[0].message.content
-
-            self.send_response(200)
-            self.send_header('Content-Type', 'application/json')
-            self.send_header('Access-Control-Allow-Origin', '*')
-            self.end_headers()
-            self.wfile.write(json.dumps({'result': result}).encode())
-
-        except Exception as e:
-            self.send_response(500)
-            self.send_header('Content-Type', 'application/json')
-            self.send_header('Access-Control-Allow-Origin', '*')
-            self.end_headers()
-            self.wfile.write(json.dumps({'error': str(e)}).encode())
+# ✅ Vercel용 handler
+def handler(request):
+    with app.test_request_context(
+        path=request.path,
+        method=request.method,
+        data=request.get_data(),
+        content_type=request.content_type
+    ):
+        return app.full_dispatch_request()
