@@ -82,7 +82,7 @@ class handler(BaseHTTPRequestHandler):
                 return
 
             client = create_openai_client()
-            model = os.environ.get("OPENAI_MODEL", "gpt-4o-mini")
+            model = os.environ.get("OPENAI_MODEL", "gpt-5-mini")
 
             user_prompt = f"""
 아래 조건에 맞는 자연 놀이를 추천해줘.
