@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>오늘의 놀이</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <!-- 네비게이션 바 -->
+  <nav class="navbar">
+    <div class="logo">🌿 오늘의 놀이</div>
+    <ul class="nav-menu">
+      <li><button onclick="showSection('hero')">홈</button></li>
+      <li><button onclick="showSection('recommend')">놀이 추천</button></li>
+      <li><button onclick="showSection('mypage')">마이페이지</button></li>
+    </ul>
+  </nav>
+
+  <!-- 섹션 1: 홈 -->
+  <section id="hero" class="section active">
+    <div class="hero-content">
+      <h1>🌳 오늘은 어떤 자연 놀이를 할까요?</h1>
+      <p>아이의 나이와 날씨를 알려주면<br/>딱 맞는 자연 놀이를 추천해드려요!</p>
+      <button class="btn-main" onclick="showSection('recommend')">
+        놀이 추천 받기 →
+      </button>
+    </div>
+  </section>
+
+  <!-- 섹션 2: 놀이 추천 -->
+  <section id="recommend" class="section">
+    <div class="container">
+      <h2>🎯 오늘의 놀이 추천</h2>
+      <p class="subtitle">아이 정보를 입력하면 AI가 추천해드려요</p>
+
+      <div class="form-box">
+        <div class="form-group">
+          <label>👶 아이 나이</label>
+          <select id="age">
+            <option value="">선택하세요</option>
+            <option value="3-4세">3-4세</option>
+            <option value="5-6세">5-6세</option>
+            <option value="7세 이상">7세 이상</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>☀️ 오늘 날씨</label>
+          <select id="weather">
+            <option value="">선택하세요</option>
+            <option value="맑음">맑음 ☀️</option>
+            <option value="흐림">흐림 ☁️</option>
+            <option value="비">비 🌧️</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>📍 장소</label>
+          <select id="place">
+            <option value="">선택하세요</option>
+            <option value="공원">공원</option>
+            <option value="집 마당">집 마당</option>
+            <option value="산/숲">산/숲</option>
+          </select>
+        </div>
+
+        <p id="error-msg" class="error-msg" style="display:none;">
+          ⚠️ 모든 항목을 선택해주세요!
+        </p>
+
+        <button class="btn-main" onclick="getRecommend()">
+          🌿 놀이 추천 받기
+        </button>
+      </div>
+
+      <div id="loading" style="display:none;" class="loading">
+        <p>🤔 AI가 추천 중이에요... 잠깐만요!</p>
+      </div>
+
+      <div id="result-box" class="result-box" style="display:none;">
+        <h3>✨ 오늘의 추천 놀이</h3>
+        <div id="result-text"></div>
+        <button class="btn-save" onclick="saveResult()">
+          💾 저장하기
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- 섹션 3: 마이페이지 -->
+  <section id="mypage" class="section">
+    <div class="container">
+      <h2>📚 저장된 놀이 기록</h2>
+      <p class="subtitle">내가 저장한 놀이 추천 목록이에요</p>
+      <div id="saved-list" class="saved-list"></div>
+      <p id="empty-msg" class="empty-msg">
+        아직 저장된 놀이가 없어요 🌱<br/>
+        놀이를 추천받고 저장해보세요!
+      </p>
+    </div>
+  </section>
+
+  <script src="js/main.js"></script>
+</body>
+</html>
