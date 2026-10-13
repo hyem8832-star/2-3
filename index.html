@@ -3,104 +3,80 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>오늘의 놀이</title>
+  <title>자연 놀이 추천 앱</title>
   <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
-
-  <!-- 네비게이션 바 -->
-  <nav class="navbar">
-    <div class="logo">🌿 오늘의 놀이</div>
-    <ul class="nav-menu">
-      <li><button onclick="showSection('hero')">홈</button></li>
-      <li><button onclick="showSection('recommend')">놀이 추천</button></li>
-      <li><button onclick="showSection('mypage')">마이페이지</button></li>
-    </ul>
-  </nav>
-
-  <!-- 섹션 1: 홈 -->
-  <section id="hero" class="section active">
-    <div class="hero-content">
-      <h1>🌳 오늘은 어떤 자연 놀이를 할까요?</h1>
-      <p>아이의 나이와 날씨를 알려주면<br/>딱 맞는 자연 놀이를 추천해드려요!</p>
-      <button class="btn-main" onclick="showSection('recommend')">
-        놀이 추천 받기 →
-      </button>
+  <header class="header">
+    <div class="container nav">
+      <h1 class="logo">Nature Play</h1>
+      <nav class="menu">
+        <a href="#home">홈</a>
+        <a href="#service">서비스 소개</a>
+        <a href="#recommend">AI 추천</a>
+      </nav>
     </div>
-  </section>
+  </header>
 
-  <!-- 섹션 2: 놀이 추천 -->
-  <section id="recommend" class="section">
-    <div class="container">
-      <h2>🎯 오늘의 놀이 추천</h2>
-      <p class="subtitle">아이 정보를 입력하면 AI가 추천해드려요</p>
-
-      <div class="form-box">
-        <div class="form-group">
-          <label>👶 아이 나이</label>
-          <select id="age">
-            <option value="">선택하세요</option>
-            <option value="3-4세">3-4세</option>
-            <option value="5-6세">5-6세</option>
-            <option value="7세 이상">7세 이상</option>
-          </select>
-        </div>
-
-        <div class="form-group">
-          <label>☀️ 오늘 날씨</label>
-          <select id="weather">
-            <option value="">선택하세요</option>
-            <option value="맑음">맑음 ☀️</option>
-            <option value="흐림">흐림 ☁️</option>
-            <option value="비">비 🌧️</option>
-          </select>
-        </div>
-
-        <div class="form-group">
-          <label>📍 장소</label>
-          <select id="place">
-            <option value="">선택하세요</option>
-            <option value="공원">공원</option>
-            <option value="집 마당">집 마당</option>
-            <option value="산/숲">산/숲</option>
-          </select>
-        </div>
-
-        <p id="error-msg" class="error-msg" style="display:none;">
-          ⚠️ 모든 항목을 선택해주세요!
+  <main>
+    <section id="home" class="hero">
+      <div class="container">
+        <h2>아이와 함께하는 자연 놀이를 더 쉽게</h2>
+        <p>
+          장소, 나이, 원하는 분위기를 입력하면
+          AI가 우리 가족에게 맞는 자연 놀이를 추천해드립니다.
         </p>
-
-        <button class="btn-main" onclick="getRecommend()">
-          🌿 놀이 추천 받기
-        </button>
+        <a href="#recommend" class="btn">지금 추천 받기</a>
       </div>
+    </section>
 
-      <div id="loading" style="display:none;" class="loading">
-        <p>🤔 AI가 추천 중이에요... 잠깐만요!</p>
+    <section id="service" class="section">
+      <div class="container">
+        <h2>서비스 소개</h2>
+        <div class="card-grid">
+          <div class="card">
+            <h3>맞춤 추천</h3>
+            <p>입력한 조건에 맞는 자연 놀이를 AI가 바로 추천합니다.</p>
+          </div>
+          <div class="card">
+            <h3>쉬운 실천</h3>
+            <p>준비물, 진행 방법, 안전 팁까지 한 번에 확인할 수 있습니다.</p>
+          </div>
+          <div class="card">
+            <h3>모바일 대응</h3>
+            <p>휴대폰에서도 편하게 사용할 수 있는 반응형 웹입니다.</p>
+          </div>
+        </div>
       </div>
+    </section>
 
-      <div id="result-box" class="result-box" style="display:none;">
-        <h3>✨ 오늘의 추천 놀이</h3>
-        <div id="result-text"></div>
-        <button class="btn-save" onclick="saveResult()">
-          💾 저장하기
-        </button>
+    <section id="recommend" class="section recommend-section">
+      <div class="container">
+        <h2>AI 자연 놀이 추천</h2>
+        <div class="form-card">
+          <label for="location">놀이 장소</label>
+          <input id="location" type="text" placeholder="예: 공원, 숲길, 아파트 앞 마당" />
+
+          <label for="age">아이 나이</label>
+          <input id="age" type="text" placeholder="예: 5세" />
+
+          <label for="theme">원하는 테마/분위기</label>
+          <input id="theme" type="text" placeholder="예: 조용한 관찰 놀이, 활동적인 놀이" />
+
+          <button id="recommendBtn" class="btn">추천 받기</button>
+
+          <p id="status" class="status"></p>
+          <div id="result" class="result-box"></div>
+        </div>
       </div>
-    </div>
-  </section>
+    </section>
+  </main>
 
-  <!-- 섹션 3: 마이페이지 -->
-  <section id="mypage" class="section">
+  <footer class="footer">
     <div class="container">
-      <h2>📚 저장된 놀이 기록</h2>
-      <p class="subtitle">내가 저장한 놀이 추천 목록이에요</p>
-      <div id="saved-list" class="saved-list"></div>
-      <p id="empty-msg" class="empty-msg">
-        아직 저장된 놀이가 없어요 🌱<br/>
-        놀이를 추천받고 저장해보세요!
-      </p>
+      <p>© 2026 Nature Play App</p>
     </div>
-  </section>
+  </footer>
 
   <script src="js/main.js"></script>
 </body>
