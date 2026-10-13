@@ -99,8 +99,7 @@ class handler(BaseHTTPRequestHandler):
                 messages=[
                     {"role": "system", "content": SYSTEM_PROMPT},
                     {"role": "user", "content": user_prompt}
-                ],
-                temperature=0.7
+                ]
             )
 
             result = ""
