@@ -4,6 +4,15 @@
 
 장소, 아이 나이, 원하는 테마를 입력하면 추천 활동, 추천 이유, 준비물, 진행 방법, 안전 팁을 한국어로 안내합니다.
 
+배포 URL: https://2-3-iota-six.vercel.app
+
+## 기술 스택
+
+- HTML, CSS, Vanilla JavaScript
+- Python Vercel Serverless Functions
+- OpenAI 호환 Chat Completions API
+- GitHub, Vercel
+
 ## 주요 기능
 
 - 장소, 아이 나이, 놀이 테마를 입력하는 추천 폼

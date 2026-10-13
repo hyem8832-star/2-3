@@ -273,4 +273,51 @@ h1 {
 .step-list {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 16
+  gap: 16px;
+}
+
+@media (max-width: 800px) {
+  .nav {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .nav-menu {
+    flex-wrap: wrap;
+    gap: 10px 14px;
+  }
+
+  h1 {
+    font-size: 42px;
+  }
+
+  .card-grid,
+  .step-list {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .recommend-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 520px) {
+  .section {
+    padding: 56px 16px;
+  }
+
+  h1 {
+    font-size: 34px;
+  }
+
+  .card-grid,
+  .step-list {
+    grid-template-columns: 1fr;
+  }
+
+  .recommend-form,
+  .result-box {
+    padding: 20px;
+  }
+}
