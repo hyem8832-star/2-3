@@ -5,27 +5,44 @@ from openai import OpenAI
 
 class handler(BaseHTTPRequestHandler):
 
+    def do_OPTIONS(self):
+        self.send_response(200)
+        self.send_header('Access-Control-Allow-Origin', '*')
+        self.send_header('Access-Control-Allow-Methods', 'POST, OPTIONS')
+        self.send_header('Access-Control-Allow-Headers', 'Content-Type')
+        self.end_headers()
+
     def do_POST(self):
-        # 요청 본문 읽기
         content_length = int(self.headers.get('Content-Length', 0))
         body = self.rfile.read(content_length)
-        data = json.loads(body)
 
-        age = data.get('age', '')
-        weather = data.get('weather', '')
-        place = data.get('place', '')
+        try:
+            data = json.loads(body)
+        except:
+            self.send_response(400)
+            self.send_header('Content-Type', 'application/json')
+            self.send_header('Access-Control-Allow-Origin', '*')
+            self.end_headers()
+            self.wfile.write(json.dumps({'error': '잘못된 요청입니다.'}).encode())
+            return
 
-        # 빈 입력 체크
+        age = data.get('age', '').strip()
+        weather = data.get('weather', '').strip()
+        place = data.get('place', '').strip()
+
         if not age or not weather or not place:
             self.send_response(400)
             self.send_header('Content-Type', 'application/json')
+            self.send_header('Access-Control-Allow-Origin', '*')
             self.end_headers()
             self.wfile.write(json.dumps({'error': '필수값이 누락되었습니다.'}).encode())
             return
 
-        # OpenAI 호출
         try:
-            client = OpenAI(api_key=os.environ.get('OPENAI_API_KEY'))
+            api_key = os.environ.get('OPENAI_API_KEY')
+            base_url = os.environ.get('OPENAI_BASE_URL')
+
+            client = OpenAI(api_key=api_key, base_url=base_url)
 
             prompt = (
                 f"아이 나이: {age}\n"
@@ -49,11 +66,13 @@ class handler(BaseHTTPRequestHandler):
 
             self.send_response(200)
             self.send_header('Content-Type', 'application/json')
+            self.send_header('Access-Control-Allow-Origin', '*')
             self.end_headers()
             self.wfile.write(json.dumps({'result': result}).encode())
 
         except Exception as e:
             self.send_response(500)
             self.send_header('Content-Type', 'application/json')
+            self.send_header('Access-Control-Allow-Origin', '*')
             self.end_headers()
             self.wfile.write(json.dumps({'error': str(e)}).encode())
